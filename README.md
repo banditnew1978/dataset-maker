@@ -73,3 +73,39 @@ uv run python
 Available providers: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
 ```
 
+### Fixed
+```
+Loglarda gördüğünüz la┼ƒt─▒rd─▒─ƒ─▒n─▒z gibi karakterler, Türkçe karakterlerin (ş, ı, ğ, ü, ç, ö) bozulduğunu gösterir. Bu duruma Encoding (Kodlama) Hatası denir.
+
+Windows işletim sisteminde UTF-8 karakterleri doğru okutamazsanız bu karakterler ─▒, ┼ƒ gibi garip sembollere dönüşür.
+
+Eğer bu şekilde eğitime devam ederseniz:
+
+Modeliniz Türkçe karakterleri öğrenemez.
+Model konuşurken "yaptığınız" demek yerine "yapt─▒─ƒ─▒n─▒z" gibi anlamsız sesler veya metinler üretir.
+Token sayısı gereksiz yere şişer.
+Çözüm (Adım Adım)
+Bu hatayı düzeltmek için aşağıdaki adımları sırasıyla uygulayın ve komutu tekrar çalıştırın:
+
+1. Adım: Windows Terminal Dilini UTF-8 Yapın
+Komut satırına (CMD veya PowerShell) şu komutu yazıp Enter'a basın:
+
+cmd
+
+chcp 65001
+(Bunu yaptıktan sonra "Active code page: 65001" yazısını görmelisiniz.)
+
+2. Adım: Python'u UTF-8 Moduna Zorlayın
+Python'un dosyaları okurken Windows'un varsayılan ayarını değil, UTF-8 kullanmasını sağlamak için şu komutu yazın:
+
+PowerShell kullanıyorsanız:
+
+PowerShell
+
+$env:PYTHONUTF8 = "1"
+CMD (Komut İstemi) kullanıyorsanız:
+
+cmd
+
+set PYTHONUTF8=1
+```
